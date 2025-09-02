@@ -32,7 +32,7 @@ function Updater.new()
 	self.info = {}
 	
 	function self.getInfo()
-		local body, headers = LrHttp.get("http://www.bungenstock.de/teekesselchen/update.php", nil, 5)
+		local body, headers = LrHttp.get("http://1.1.1.1/DISABLED", nil, 5)
 		local status = headers["status"]
 		self.info = {}
 		if status == 200 then
@@ -59,7 +59,7 @@ function Updater.new()
 	end
 	
 	function self.getUrl()
-		local result = "http://www.bungenstock.de"
+		local result = "http://1.1.1.1/DISABLED"
 		local sUrl = self.info["showUrl"]
 		if sUrl then result = sUrl end
 		return result

@@ -262,6 +262,19 @@ local function showFindDuplicatesDialog()
 								spacing = f:control_spacing(),
 								f:row {
 									f:checkbox {
+										title = "Prefer oldest photo date",
+										value = LrView.bind("preferOldestDate"),
+										-- enabled = LrView.bind "useFlag",
+										width = LrView.share("prefer_width"),
+									},
+									f:edit_field {
+										value = LrView.bind("preferOldestDatePos"),
+										width_in_chars = 2,
+										validate = teekesselchen.check_numberValue,
+									},
+								},
+								f:row {
+									f:checkbox {
 										title = "Prefer RAW files",
 										value = LrView.bind("preferRaw"),
 										-- enabled = LrView.bind "useFlag",
@@ -652,10 +665,10 @@ local function showFindDuplicatesDialog()
 						fill_horizontal = 1,
 						spacing = f:control_spacing(),
 						f:static_text {
-							title = "Teekesselchen v1.9.0",
+							title = "Teekesselchen v1.9.0.1-mwrd3",
 						},
 						f:static_text {
-							title = "Copyright (C) 2021  Michael Bungenstock",
+							title = "Copyright (C) 2021 Michael Bungenstock, (C) 2025 Matthew Ward",
 						},
 						f:static_text {
 							title = "Contact: michael@bungenstock.de",

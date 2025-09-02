@@ -29,17 +29,17 @@ return {
 	LrSdkVersion = 4.0,
 	LrSdkMinimumVersion = 3.0, -- minimum SDK version required by this plug-in
 
-	LrToolkitIdentifier = "de.bungenstock.lightroom.teekesselchen",
+	LrToolkitIdentifier = "dev.mwrd.teekesselchen",
 
-	LrPluginName = LOC "Teekesselchen",
+	LrPluginName = LOC "Teekesselchen (mwrd)",
 	
-	LrPluginInfoUrl = "http://www.bungenstock.de/teekesselchen"	,
+	LrPluginInfoUrl = "https://github.com/WheresWardy/teekesselchen",
 	LrInitPlugin = "PluginInit.lua",
 
 	-- LrMetadataProvider = "TeekesselchenMetadataDefinition.lua",
 
 	LrLibraryMenuItems = {{
-		    title = LOC "Find Duplicates",
+		    title = LOC "Find Duplicates (mwrd)",
 		    file = "TeekesselchenDialog.lua",
 	}},
 	VERSION = { major=1, minor=9, revision=0, build=1 },
