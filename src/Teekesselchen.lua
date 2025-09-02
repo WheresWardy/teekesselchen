@@ -30,6 +30,7 @@ local LrDialogs = import "LrDialogs"
 local LrProgressScope = import "LrProgressScope"
 local LrTasks = import "LrTasks"
 local LrFileUtils = import "LrFileUtils"
+local LrPathUtils = import "LrPathUtils"
 
 require "Util"
 
@@ -142,6 +143,43 @@ local function preferLarge(tree,photo,flag,label)
 		return true
 	else
 		if sizeNew > sizeHead then
+			changeOrder(tree,photo,flag,label)
+			return true
+		end
+	end
+	return false
+end
+
+local function preferOldestDate(tree,photo,flag,label)
+	local header = tree[2]
+
+	-- get the photo path date of the header as a number
+	local pathHead = header:getRawMetadata("path")
+	local parentHead = LrPathUtils.parent(pathHead)
+	local leafHead = LrPathUtils.leafName(parentHead)
+	local leafNumHead = leafHead:gsub("-", "")
+	local dateHead = tonumber(leafNumHead)
+
+	-- get the photo path date of the new photo as a number
+	local pathNew = photo:getRawMetadata("path")
+	local parentNew = LrPathUtils.parent(pathNew)
+	local leafNew = LrPathUtils.leafName(parentNew)
+	local leafNumNew = leafNew:gsub("-", "")
+	local dateNew = tonumber(leafNumNew)
+
+	-- if they are the same, compare the capture date instead
+	if dateNew == dateHead then
+		local captureDateHead = header:getRawMetadata("dateTimeOriginal")
+		local dateHead = tonumber(captureDateHead)
+		local captureDateNew = photo:getRawMetadata("dateTimeOriginal")
+		local dateNew = tonumber(captureDateNew)
+	end
+
+	if dateNew > dateHead then
+		insertFlaggedPhoto(tree,photo,flag,label)
+		return true
+	else
+		if dateNew < dateHead then
 			changeOrder(tree,photo,flag,label)
 			return true
 		end
@@ -610,6 +648,15 @@ function Teekesselchen.new(context)
 						pos = pos + 1
 					end
 					sortingTable[pos] = preferLarge
+				end
+			end
+			if settings.preferOldestDate then
+				pos = tonumber(settings.preferOldestDatePos)
+				if pos >= 0 then
+					while sortingTable[pos] do
+						pos = pos + 1
+					end
+					sortingTable[pos] = preferOldestDate
 				end
 			end
 			if settings.preferDimension then
